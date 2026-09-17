@@ -14,6 +14,19 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<Map<String, Object>> handleInvalidCredentials(InvalidCredentialsException ex) {
+        // Shaped to match the swagger ErrorResponse schema exactly
+        // (status/message/code), since /api/auth/login's 401 response
+        // references that schema directly.
+        Map<String, Object> body = new HashMap<>();
+        body.put("status", "error");
+        body.put("message", ex.getMessage());
+        body.put("code", null);
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
+    }
+
     @ExceptionHandler(UsernameAlreadyExistsException.class)
     public ResponseEntity<Map<String, Object>> handleUsernameAlreadyExists(UsernameAlreadyExistsException ex) {
         Map<String, Object> body = new HashMap<>();

@@ -14,4 +14,8 @@ public interface AuthUserRepository extends JpaRepository<AuthUser, Long> {
     Optional<AuthUser> findByUsrUsername(String usrUsername);
 
     boolean existsByUsrEmail(String usrEmail);
+
+    // Used by AdminInitializer to decide whether the one-time ADMIN
+    // bootstrap needs to run.
+    boolean existsByUsrRole(String usrRole);
 }
