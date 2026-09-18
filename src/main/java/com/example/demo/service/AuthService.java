@@ -6,6 +6,7 @@ import com.example.demo.dto.LoginResponse;
 import com.example.demo.dto.RegistrationRequest;
 import com.example.demo.dto.RegistrationResponse;
 import com.example.demo.entity.AuthUser;
+import com.example.demo.exception.EmailAlreadyExistsException;
 import com.example.demo.exception.InvalidCredentialsException;
 import com.example.demo.exception.InvalidRoleException;
 import com.example.demo.exception.UsernameAlreadyExistsException;
@@ -111,6 +112,9 @@ public class AuthService {
         if (authUserRepository.existsByUsrUsername(username)) {
             throw new UsernameAlreadyExistsException("Username '" + username + "' is already registered");
         }
+        if (authUserRepository.existsByUsrEmail(email)) {
+            throw new EmailAlreadyExistsException("Email '" + email + "' is already registered");
+        }
 
         LocalDateTime now = LocalDateTime.now();
 
@@ -139,7 +143,8 @@ public class AuthService {
                 savedUser.getUsrUsername(),
                 savedUser.getUsrEmail(),
                 savedUser.getUsrRole(),
-                savedUser.getUsrSts()
+                savedUser.getUsrSts(),
+                "User registered successfully"
         );
     }
 }

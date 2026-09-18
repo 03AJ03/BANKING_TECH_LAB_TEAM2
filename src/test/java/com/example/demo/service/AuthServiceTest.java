@@ -96,6 +96,17 @@ class AuthServiceTest {
     }
 
     @Test
+    void register_DuplicateEmail_ThrowsException() {
+        RegistrationRequest request = new RegistrationRequest("new_user", "existing@example.com", "Password123!");
+
+        when(authUserRepository.existsByUsrUsername("new_user")).thenReturn(false);
+        when(authUserRepository.existsByUsrEmail("existing@example.com")).thenReturn(true);
+
+        assertThrows(RuntimeException.class, () -> authService.register(request));
+        verify(authUserRepository, never()).save(any());
+    }
+
+    @Test
     void register_BCryptHashing_Verification() {
         RegistrationRequest request = new RegistrationRequest("new_user", "new@example.com", "mySecretPass");
 
