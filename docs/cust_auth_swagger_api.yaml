@@ -1069,6 +1069,15 @@ components:
           format: int64
         username:
           type: string
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          example: CUSTOMER
+        status:
+          type: string
+          example: ACTIVE
         message:
           type: string
           example: User registered successfully

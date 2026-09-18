@@ -7,16 +7,23 @@ public class RegistrationResponse {
     private String email;
     private String role;
     private String status;
+    private String message;
 
     public RegistrationResponse() {
+        this.message = "User registered successfully";
     }
 
     public RegistrationResponse(Long userId, String username, String email, String role, String status) {
+        this(userId, username, email, role, status, "User registered successfully");
+    }
+
+    public RegistrationResponse(Long userId, String username, String email, String role, String status, String message) {
         this.userId = userId;
         this.username = username;
         this.email = email;
         this.role = role;
         this.status = status;
+        this.message = message == null ? "User registered successfully" : message;
     }
 
     public Long getUserId() {
@@ -57,5 +64,13 @@ public class RegistrationResponse {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
